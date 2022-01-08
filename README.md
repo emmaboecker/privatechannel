@@ -1,6 +1,10 @@
 # Private Channel
 A [Mikbot](https://github.com/DrSchlaubi/mikbot) Plugin which lets your Discord Memebers create their own Channel
 
+### [Invite](https://discord.com/api/oauth2/authorize?client_id=928406881419030642&permissions=1099528528944&scope=bot%20applications.commands)
+
+If you want to invite the public version of this bot, hosted by me, click [here](https://discord.com/api/oauth2/authorize?client_id=928406881419030642&permissions=1099528528944&scope=bot%20applications.commands)
+
 ## How to use
 
 - **For Members:**
