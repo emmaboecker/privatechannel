@@ -6,6 +6,12 @@ plugins {
     kotlin("plugin.serialization") version "1.6.10"
     id("com.google.devtools.ksp") version "1.6.10-1.0.2"
     id("dev.schlaubi.mikbot.gradle-plugin") version "1.3.1"
+
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+}
+
+ktlint {
+    disabledRules.set(listOf("no-wildcard-imports"))
 }
 
 group = "net.stckoverflw"
@@ -59,5 +65,11 @@ tasks {
 
     installBot {
         botVersion.set("2.0.1-SNAPSHOT")
+    }
+
+    buildRepository {
+        repositoryUrl.set("https://private-channel-repo.stckoverflw.net")
+        targetDirectory.set(rootProject.file("ci-repo").toPath())
+        projectUrl.set("https://github.com/StckOverflw/privatechannel")
     }
 }
