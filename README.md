@@ -3,7 +3,7 @@ A [Mikbot](https://github.com/DrSchlaubi/mikbot) Plugin which lets your Discord 
 
 ## How to use
 
-- <h3>For Members:</h3>
+- **For Members:**
   - To create your own channel join the set category of the server (use `/settings show` if you don't know the channel)
   - `/channel user [user]`
     - add or remove a user from your channel
@@ -24,10 +24,10 @@ A [Mikbot](https://github.com/DrSchlaubi/mikbot) Plugin which lets your Discord 
       - `invisible` means the same as private but the channel is not visible to normal users
   - `/channel join [owner] [password]`
     - used to join a channel of someone by using a password
-  
 
-- <h3>For Server Admins:</h3>
-  - `/settings create-channel [voice-channel]` 
+
+- **For Server Admins:**
+  - `/settings create-channel [voice-channel]`
     - set the which users can join to create their own channel
   - `/settings category [category]`
     - set the category in wich the private channel will be created
