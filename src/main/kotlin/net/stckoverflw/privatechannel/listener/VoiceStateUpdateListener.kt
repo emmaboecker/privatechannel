@@ -36,11 +36,23 @@ suspend fun PrivateChannelEventModule.voiceStateUpdateListener() = event<VoiceSt
         if (event.state.channelId != event.old?.channelId) {
             if (guildSettings.createChannel == event.state.channelId) {
                 if (privateChannel == null) {
-                    var category = guild.getChannelOf<Category>(guildSettings.privateChannelCategory ?: return@action)
+                    var category = guild.getChannelOfOrNull<Category>(guildSettings.privateChannelCategory?.first() ?: return@action) ?: return@action
 
                     if (category.channels.count() > 48) {
-                        category = guild.createCategory(category.name) {
-                            position = category.rawPosition + 1
+                        if (guildSettings.privateChannelCategory.size > 1) {
+                            guildSettings.privateChannelCategory.subList(
+                                1,
+                                guildSettings.privateChannelCategory.lastIndex
+                            ).forEachIndexed { index, snowflake ->
+                                category = guild.getChannelOf(snowflake)
+                                if (category.channels.count() > 48) {
+                                    if (guildSettings.privateChannelCategory.getOrNull(index + 1) == null) {
+                                        category = guild.createCategory(category.name) {
+                                            position = category.rawPosition + 1
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -52,7 +64,6 @@ suspend fun PrivateChannelEventModule.voiceStateUpdateListener() = event<VoiceSt
                         voiceName = "<placeholder>",
                         textName = "<placeholder>",
                     )
-
 
                     fun PermissionOverwritesBuilder.disallowForEveryone(hideChannel: Boolean) {
                         addOverwrite(
@@ -117,7 +128,8 @@ suspend fun PrivateChannelEventModule.voiceStateUpdateListener() = event<VoiceSt
                     PermissionOverwrite.forMember(
                         memberId = member.id,
                         allowed = privateChannel.reFetch().getAllowedPermissionsForMember(member.id)
-                    ), reason = "in channel"
+                    ),
+                    reason = "in channel"
                 )
             }
         }
@@ -143,7 +155,8 @@ suspend fun PrivateChannelEventModule.voiceStateUpdateListener() = event<VoiceSt
                         PermissionOverwrite.forMember(
                             memberId = member.id,
                             denied = Permissions(Permission.All)
-                        ), reason = "not in channel anymore"
+                        ),
+                        reason = "not in channel anymore"
                     )
                 }
             }

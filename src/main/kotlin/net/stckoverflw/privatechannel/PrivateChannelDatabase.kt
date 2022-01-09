@@ -11,7 +11,6 @@ object PrivateChannelDatabase : KoinComponent {
 
     val guildSettingsCollection = database.getCollection<PrivateChannelGuildSettings>("guild_settings")
     val privateChannelCollection = database.getCollection<PrivateChannel>("private_channel")
-
 }
 
 suspend fun PrivateChannel.reFetch() = PrivateChannelDatabase.privateChannelCollection.findOneById(voiceChannelId)!!
@@ -61,7 +60,6 @@ enum class ChannelType {
     PERMANENT,
 }
 
-
 /**
  * @param guild The Guild this settings Entry is for
  * @param createChannel The Channel wich users can create their own channel with
@@ -72,7 +70,7 @@ enum class ChannelType {
 data class PrivateChannelGuildSettings(
     @SerialName("_id") val guild: Snowflake,
     val createChannel: Snowflake? = null,
-    val privateChannelCategory: Snowflake? = null,
+    val privateChannelCategory: List<Snowflake>? = null,
     val permanentChannelRoles: List<Snowflake> = emptyList(),
     val passwordChannelRoles: List<Snowflake> = emptyList(),
     val invisibleChannelRoles: List<Snowflake> = emptyList(),

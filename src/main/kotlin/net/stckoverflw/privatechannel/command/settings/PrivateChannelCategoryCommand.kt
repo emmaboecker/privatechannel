@@ -25,7 +25,7 @@ suspend fun EphemeralSlashCommand<*>.privateChannelCategoryCommand() = ephemeral
 
         PrivateChannelDatabase.guildSettingsCollection.save(
             guildSettings.copy(
-                privateChannelCategory = arguments.category.id
+                privateChannelCategory = listOf(arguments.category.id)
             )
         )
 
