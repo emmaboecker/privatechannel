@@ -61,10 +61,13 @@ suspend fun EphemeralSlashCommand<*>.channelUserCommand() = ephemeralSubCommand(
                     )
                 )
 
-                voiceChannel.addOverwrite(PermissionOverwrite.forMember(
-                    memberId = arguments.member.id,
-                    allowed = privateChannel.reFetch().getAllowedPermissionsForMember(arguments.member.id),
-                ), reason = "user was added to the channel")
+                voiceChannel.addOverwrite(
+                    PermissionOverwrite.forMember(
+                        memberId = arguments.member.id,
+                        allowed = privateChannel.reFetch().getAllowedPermissionsForMember(arguments.member.id),
+                    ),
+                    reason = "user was added to the channel"
+                )
 
                 respond {
                     content = translateString("commands.channel.user.add.success", arguments.member.mention)
@@ -90,19 +93,20 @@ suspend fun EphemeralSlashCommand<*>.channelUserCommand() = ephemeralSubCommand(
                     )
                 )
 
-
                 if (privateChannel.access != ChannelAccess.EVERYONE) {
                     if (voiceChannel.voiceStates.any { it.userId == arguments.member.id && it.channelId == voiceChannel.id }) {
                         arguments.member.edit {
                             voiceChannelId = null
                         }
                     }
-                    voiceChannel.addOverwrite(PermissionOverwrite.forMember(
-                        memberId = arguments.member.id,
-                        denied = privateChannel.reFetch().getAllowedPermissionsForMember(arguments.member.id),
-                    ), reason = "user was removed from the channel")
+                    voiceChannel.addOverwrite(
+                        PermissionOverwrite.forMember(
+                            memberId = arguments.member.id,
+                            denied = privateChannel.reFetch().getAllowedPermissionsForMember(arguments.member.id),
+                        ),
+                        reason = "user was removed from the channel"
+                    )
                 }
-
 
                 respond {
                     content = translateString("commands.channel.user.remove.success", arguments.member.mention)

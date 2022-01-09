@@ -34,7 +34,7 @@ suspend fun EphemeralSlashCommand<*>.joinChannelWithPasswordCommand() = ephemera
         if (!(joiningChannel == null || member!!.id in joiningChannel.bannedUsers)) {
             if (member!!.id in joiningChannel.users || member!!.id in joiningChannel.moderators) {
                 respond {
-                   content = translateString("commands.channel.join.already")
+                    content = translateString("commands.channel.join.already")
                 }
                 return@action
             }
@@ -44,13 +44,15 @@ suspend fun EphemeralSlashCommand<*>.joinChannelWithPasswordCommand() = ephemera
                 }
                 return@action
             }
-            if (!(guildSettings().passwordChannelRoles.isEmpty() ||
-                guildSettings().passwordChannelRoles
-                    .any { neededRole ->
-                        neededRole in safeGuild.withStrategy(EntitySupplyStrategy.rest)
-                            .getMemberOrNull(joiningChannel.owner)!!.roleIds
-                    }
-            )) {
+            if (!(
+                guildSettings().passwordChannelRoles.isEmpty() ||
+                    guildSettings().passwordChannelRoles
+                        .any { neededRole ->
+                            neededRole in safeGuild.withStrategy(EntitySupplyStrategy.rest)
+                                .getMemberOrNull(joiningChannel.owner)!!.roleIds
+                        }
+                )
+            ) {
                 PrivateChannelDatabase.privateChannelCollection.save(
                     joiningChannel.copy(
                         password = null
@@ -65,9 +67,11 @@ suspend fun EphemeralSlashCommand<*>.joinChannelWithPasswordCommand() = ephemera
 
                 safeGuild.getChannelOf<VoiceChannel>(joiningChannel.voiceChannelId).addOverwrite(
                     PermissionOverwrite.forMember(
-                    memberId = member!!.id,
-                    allowed = channel.getAllowedPermissionsForMember(member!!.id),
-                ), reason = "user joined channel with password")
+                        memberId = member!!.id,
+                        allowed = channel.getAllowedPermissionsForMember(member!!.id),
+                    ),
+                    reason = "user joined channel with password"
+                )
                 respond {
                     content = translateString("commands.channel.join.joined")
                 }

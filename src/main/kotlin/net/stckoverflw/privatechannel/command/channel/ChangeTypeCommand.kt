@@ -36,9 +36,11 @@ suspend fun EphemeralSlashCommand<*>.changeTypeCommand() = ephemeralSubCommand(:
                         guildSettings().permanentChannelRoles.isEmpty() ||
                         guildSettings().permanentChannelRoles
                             .any { neededRole ->
-                                guild().getMemberOrNull(privateChannel!!.owner)?.roles?.let { it.any { role ->
-                                    role.id == neededRole
-                                }} == true
+                                guild().getMemberOrNull(privateChannel!!.owner)?.roles?.let {
+                                    it.any { role ->
+                                        role.id == neededRole
+                                    } 
+                                } == true
                             }
                     ) {
                         PrivateChannelDatabase.privateChannelCollection.save(

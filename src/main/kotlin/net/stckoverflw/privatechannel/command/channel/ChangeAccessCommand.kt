@@ -43,10 +43,13 @@ suspend fun EphemeralSlashCommand<*>.changeAccessCommand() = ephemeralSubCommand
                             access = ChannelAccess.EVERYONE
                         )
                     )
-                    voiceChannel.addOverwrite(PermissionOverwrite.forEveryone(
-                        safeGuild.id,
-                        allowed = Permissions(Permission.ViewChannel, Permission.Connect)
-                    ), reason = "channel was made public")
+                    voiceChannel.addOverwrite(
+                        PermissionOverwrite.forEveryone(
+                            safeGuild.id,
+                            allowed = Permissions(Permission.ViewChannel, Permission.Connect)
+                        ),
+                        reason = "channel was made public"
+                    )
                 }
                 ChannelAccess.PRIVATE -> {
                     PrivateChannelDatabase.privateChannelCollection.save(
@@ -54,20 +57,25 @@ suspend fun EphemeralSlashCommand<*>.changeAccessCommand() = ephemeralSubCommand
                             access = ChannelAccess.PRIVATE
                         )
                     )
-                    voiceChannel.addOverwrite(PermissionOverwrite.forEveryone(
-                        safeGuild.id,
-                        allowed = Permissions(Permission.ViewChannel),
-                        denied = Permissions(Permission.Connect)
-                    ), reason = "channel was made private")
+                    voiceChannel.addOverwrite(
+                        PermissionOverwrite.forEveryone(
+                            safeGuild.id,
+                            allowed = Permissions(Permission.ViewChannel),
+                            denied = Permissions(Permission.Connect)
+                        ),
+                        reason = "channel was made private"
+                    )
                 }
                 ChannelAccess.INVISIBLE -> {
                     if (
                         guildSettings().invisibleChannelRoles.isEmpty() ||
                         guildSettings().invisibleChannelRoles
                             .any { neededRole ->
-                                guild().getMemberOrNull(privateChannel.owner)?.roles?.let { it.any { role ->
-                                    role.id == neededRole
-                                }} == true
+                                guild().getMemberOrNull(privateChannel.owner)?.roles?.let {
+                                    it.any { role ->
+                                        role.id == neededRole
+                                    } 
+                                } == true
                             }
                     ) {
                         PrivateChannelDatabase.privateChannelCollection.save(
@@ -75,10 +83,13 @@ suspend fun EphemeralSlashCommand<*>.changeAccessCommand() = ephemeralSubCommand
                                 access = ChannelAccess.INVISIBLE
                             )
                         )
-                        voiceChannel.addOverwrite(PermissionOverwrite.forEveryone(
-                            safeGuild.id,
-                            denied = Permissions(Permission.All)
-                        ), reason = "channel was made invisible")
+                        voiceChannel.addOverwrite(
+                            PermissionOverwrite.forEveryone(
+                                safeGuild.id,
+                                denied = Permissions(Permission.All)
+                            ),
+                            reason = "channel was made invisible"
+                        )
                     } else {
                         respond {
                             content = translateString("commands.channel.change-access.no-access")
@@ -95,9 +106,12 @@ suspend fun EphemeralSlashCommand<*>.changeAccessCommand() = ephemeralSubCommand
 }
 
 class ChangeAccessArguments : Arguments() {
-    val access by stringChoice("access", "The new access level of this channel", mapOf(
-        "Public" to ChannelAccess.EVERYONE.name,
-        "Private" to ChannelAccess.PRIVATE.name,
-        "Invisible (Private)" to ChannelAccess.INVISIBLE.name
-    ))
+    val access by stringChoice(
+        "access", "The new access level of this channel",
+        mapOf(
+            "Public" to ChannelAccess.EVERYONE.name,
+            "Private" to ChannelAccess.PRIVATE.name,
+            "Invisible (Private)" to ChannelAccess.INVISIBLE.name
+        )
+    )
 }

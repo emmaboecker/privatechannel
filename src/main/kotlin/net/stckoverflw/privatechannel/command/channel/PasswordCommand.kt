@@ -62,7 +62,6 @@ suspend fun EphemeralSlashCommand<*>.passwordCommand() = ephemeralSubCommand(::C
                 }
             }
         }
-
     }
 }
 

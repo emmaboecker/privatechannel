@@ -59,9 +59,12 @@ suspend fun EphemeralSlashCommand<*>.renameChannelCommand() = ephemeralSubComman
 }
 
 class RenameChannelArguments : Arguments() {
-    val channel by stringChoice("channel-type", "The type of channel you want to rename", mapOf(
-        "Text" to "text",
-        "Voice" to "voice"
-    ))
+    val channel by stringChoice(
+        "channel-type", "The type of channel you want to rename",
+        mapOf(
+            "Text" to "text",
+            "Voice" to "voice"
+        )
+    )
     val newName by string("new-name", "The new name of your channel")
 }

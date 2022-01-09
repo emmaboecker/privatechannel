@@ -19,7 +19,6 @@ class PrivateChannelPlugin(wrapper: PluginWrapper) : Plugin(wrapper) {
         add(::PrivateChannelCommandModule)
         add(::PrivateChannelEventModule)
     }
-
 }
 
 @Extension
@@ -35,7 +34,6 @@ class PrivateChannelEventModule : KordExtension() {
     override suspend fun setup() {
         voiceStateUpdateListener()
     }
-
 }
 
 class PrivateChannelCommandModule : KordExtension() {
@@ -44,5 +42,4 @@ class PrivateChannelCommandModule : KordExtension() {
     override suspend fun setup() {
         channelCommand()
     }
-
 }

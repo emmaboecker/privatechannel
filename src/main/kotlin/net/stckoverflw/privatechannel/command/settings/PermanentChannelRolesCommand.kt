@@ -35,7 +35,6 @@ suspend fun EphemeralSlashCommand<*>.permanentChannelRolesCommand() =
                         +AllowedMentionType.UserMentions
                     }
                 }
-
             } else {
                 PrivateChannelDatabase.guildSettingsCollection.save(
                     guildSettings.copy(
