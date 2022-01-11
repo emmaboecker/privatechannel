@@ -136,12 +136,13 @@ suspend fun PrivateChannelEventModule.voiceStateUpdateListener() = event<VoiceSt
         if (event.state.channelId != event.old?.channelId && event.old?.channelId != guildSettings.createChannel) {
             val channel = PrivateChannelDatabase.privateChannelCollection.findOneById(event.old?.channelId ?: return@action) ?: return@action
             val discordVoiceChannel = guild.getChannelOfOrNull<VoiceChannel>(channel.voiceChannelId) ?: return@action
+            val discordTextChannel = guild.getChannelOfOrNull<TextChannel>(channel.voiceChannelId) ?: return@action
             if (discordVoiceChannel.voiceStates.count() == 0) {
                 if (channel.type == ChannelType.TEMPORARY) {
                     PrivateChannelDatabase.privateChannelCollection
                         .deleteOne(and(PrivateChannel::guild eq guild.id, PrivateChannel::owner eq member.id))
-                    voiceChannel().delete("Temporary Channel")
-                    textChannel().delete("Temporary Channel")
+                    discordVoiceChannel.delete("Temporary Channel")
+                    discordTextChannel.delete("Temporary Channel")
                 }
             }
             if (event.old?.channelId == channel.voiceChannelId) {
