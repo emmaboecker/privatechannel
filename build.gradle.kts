@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.10"
     id("com.google.devtools.ksp") version "1.6.10-1.0.2"
-    id("dev.schlaubi.mikbot.gradle-plugin") version "1.3.1"
+    id("dev.schlaubi.mikbot.gradle-plugin") version "1.3.2"
 
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
@@ -15,7 +15,7 @@ ktlint {
 }
 
 group = "net.stckoverflw"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("dev.schlaubi:mikbot-api:2.0.1-SNAPSHOT")
+    compileOnly("dev.schlaubi:mikbot-api:2.1.0-SNAPSHOT-SNAPSHOT")
     ksp("dev.schlaubi:mikbot-plugin-processor:1.0.0")
 }
 
@@ -56,7 +56,7 @@ tasks {
     }
 
     val generateDefaultResourceBundle = task<GenerateDefaultTranslationBundleTask>("generateDefaultResourceBundle") {
-        defaultLocale.set(Locale("en:GB"))
+        defaultLocale.set(Locale("en", "GB"))
     }
 
     assemblePlugin {
@@ -64,7 +64,7 @@ tasks {
     }
 
     installBot {
-        botVersion.set("2.0.1-SNAPSHOT")
+        botVersion.set("2.1.0-SNAPSHOT-SNAPSHOT")
     }
 
     buildRepository {
