@@ -32,7 +32,7 @@ If you want to invite the public version of this bot, hosted by me, click [here]
 
 - **For Server Admins:**
   - `/settings create-channel [voice-channel]`
-    - set the which users can join to create their own channel
+    - set the voice-channel which users can join to create their own channel
   - `/settings category [category]`
     - set the category in wich the private channel will be created
   - `/settings permanent-channel-roles [role]`
