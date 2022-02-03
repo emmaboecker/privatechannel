@@ -53,8 +53,8 @@ suspend fun EphemeralSlashCommand<*>.invisibleChannelRolesCommand() =
     }
 
 class InvisibleChannelRolesArguments : Arguments() {
-    val role by role(
-        "role",
-        "The role to add to allowed invisible channel roles (if already allowed, it will be disallowed)"
-    )
+    val role by role {
+        name = "role"
+        description = "The role to add to allowed invisible channel roles (if already allowed, it will be disallowed)"
+    }
 }

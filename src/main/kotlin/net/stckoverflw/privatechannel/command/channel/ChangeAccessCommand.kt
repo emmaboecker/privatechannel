@@ -106,12 +106,13 @@ suspend fun EphemeralSlashCommand<*>.changeAccessCommand() = ephemeralSubCommand
 }
 
 class ChangeAccessArguments : Arguments() {
-    val access by stringChoice(
-        "access", "The new access level of this channel",
-        mapOf(
+    val access by stringChoice {
+        name = "access"
+        description = "The new access level of this channel"
+        choices = mutableMapOf(
             "Public" to ChannelAccess.EVERYONE.name,
             "Private" to ChannelAccess.PRIVATE.name,
             "Invisible (Private)" to ChannelAccess.INVISIBLE.name
         )
-    )
+    }
 }

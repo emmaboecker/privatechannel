@@ -72,11 +72,12 @@ suspend fun EphemeralSlashCommand<*>.changeTypeCommand() = ephemeralSubCommand(:
 }
 
 class ChangeTypeArguments : Arguments() {
-    val newType by stringChoice(
-        "type", "The Type the channel should be changed to",
-        mapOf(
+    val newType by stringChoice {
+        name = "type"
+        description = "The Type the channel should be changed to"
+        choices = mutableMapOf(
             "Temporary" to ChannelType.TEMPORARY.name,
             "Permanent" to ChannelType.PERMANENT.name,
         )
-    )
+    }
 }

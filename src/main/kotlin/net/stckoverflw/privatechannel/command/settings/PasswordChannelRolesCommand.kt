@@ -53,8 +53,8 @@ suspend fun EphemeralSlashCommand<*>.passwordChannelRolesCommand() =
     }
 
 class PasswordChannelRolesArguments : Arguments() {
-    val role by role(
-        "role",
-        "The role to add to allowed password protected channel roles (if already, it'll be disallowed)"
-    )
+    val role by role {
+        name = "role"
+        description = "The role to add to allowed password protected channel roles (if already, it'll be disallowed)"
+    }
 }

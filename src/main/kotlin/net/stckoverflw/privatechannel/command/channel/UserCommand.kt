@@ -117,5 +117,8 @@ suspend fun EphemeralSlashCommand<*>.channelUserCommand() = ephemeralSubCommand(
 }
 
 class ChannelUserArguments : Arguments() {
-    val member by member("user", "The user you want to add or remove from this channel")
+    val member by member{
+        name = "user"
+        description = "The user you want to add or remove from this channel"
+    }
 }

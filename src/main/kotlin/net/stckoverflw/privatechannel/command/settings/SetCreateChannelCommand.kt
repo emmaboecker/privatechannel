@@ -1,6 +1,5 @@
 package net.stckoverflw.privatechannel.command.settings
 
-import com.kotlindiscord.kord.extensions.DiscordRelayedException
 import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.application.slash.EphemeralSlashCommand
 import com.kotlindiscord.kord.extensions.commands.application.slash.ephemeralSubCommand
@@ -40,9 +39,11 @@ suspend fun EphemeralSlashCommand<*>.setCreateChannelCommand() = ephemeralSubCom
 }
 
 class SetCreateChannelArguments : Arguments() {
-    val channel by channel("channel", "The channel to set the Create-Channel to") { _, channel ->
-        if (channel.type != ChannelType.GuildVoice) {
-            throw DiscordRelayedException(translate("commands.error.invalid_channel.voice"))
+    val channel by channel{
+        name = "channel"
+        description = "The channel to set the Create-Channel to"
+        validate {
+            failIf(value.type != ChannelType.GuildVoice, translate("commands.error.invalid_channel.voice"))
         }
     }
 }

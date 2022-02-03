@@ -110,5 +110,8 @@ suspend fun EphemeralSlashCommand<*>.channelBanCommand() = ephemeralSubCommand(:
 }
 
 class ChannelBanArguments : Arguments() {
-    val member by member("user", "The User to ban or unban")
+    val member by member {
+        name = "member"
+        description = "the user to ban or unban"
+    }
 }

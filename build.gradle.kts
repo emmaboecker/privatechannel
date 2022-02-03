@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.10"
     id("com.google.devtools.ksp") version "1.6.10-1.0.2"
-    id("dev.schlaubi.mikbot.gradle-plugin") version "1.3.2"
+    id("dev.schlaubi.mikbot.gradle-plugin") version "1.4.1"
 
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
@@ -15,7 +15,7 @@ ktlint {
 }
 
 group = "net.stckoverflw"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("dev.schlaubi:mikbot-api:2.1.0-SNAPSHOT-SNAPSHOT")
+    compileOnly("dev.schlaubi:mikbot-api:2.1.0-SNAPSHOT")
     ksp("dev.schlaubi:mikbot-plugin-processor:1.0.0")
 }
 
@@ -64,10 +64,10 @@ tasks {
     }
 
     installBot {
-        botVersion.set("2.1.0-SNAPSHOT-SNAPSHOT")
+        botVersion.set("2.1.0-SNAPSHOT")
     }
 
-    buildRepository {
+    pluginPublishing {
         repositoryUrl.set("https://private-channel-repo.stckoverflw.net")
         targetDirectory.set(rootProject.file("ci-repo").toPath())
         projectUrl.set("https://github.com/StckOverflw/privatechannel")

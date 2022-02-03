@@ -89,6 +89,13 @@ suspend fun EphemeralSlashCommand<*>.joinChannelWithPasswordCommand() = ephemera
 }
 
 class JoinWithPasswordArguments : Arguments() {
-    val channelOwner by member("owner", "The owner of the channel you want to join")
-    val password by string("password", "The password of the channel")
+    val channelOwner by member {
+        name = "owner"
+        description = "The owner of the channel you want to join"
+    }
+
+    val password by string{
+        name = "password"
+        description = "The password of the channel"
+    }
 }

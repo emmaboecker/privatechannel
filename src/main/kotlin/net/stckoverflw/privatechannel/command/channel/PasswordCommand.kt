@@ -66,5 +66,8 @@ suspend fun EphemeralSlashCommand<*>.passwordCommand() = ephemeralSubCommand(::C
 }
 
 class ChannelPasswordArguments : Arguments() {
-    val password by optionalString("password", "The new password of the channel")
+    val password by optionalString{
+        name = "password"
+        description = "The new password of the channel"
+    }
 }
