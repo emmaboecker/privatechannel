@@ -65,7 +65,7 @@ suspend fun EphemeralSlashCommand<*>.channelModCommand() = ephemeralSubCommand(:
 }
 
 class ChannelModArguments : Arguments() {
-    val member by member{
+    val member by member {
         name = "user"
         description = "The User you want to add or remove as a moderator of this channel"
     }

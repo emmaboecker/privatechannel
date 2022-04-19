@@ -67,7 +67,7 @@ class RenameChannelArguments : Arguments() {
             "Voice" to "voice"
         )
     }
-    val newName by string{
+    val newName by string {
         name = "new-name"
         description = "The new name of your channel"
     }

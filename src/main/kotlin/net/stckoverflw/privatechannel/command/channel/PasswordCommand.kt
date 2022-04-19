@@ -8,7 +8,7 @@ import com.kotlindiscord.kord.extensions.commands.converters.impl.optionalString
 import com.kotlindiscord.kord.extensions.types.respond
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.schlaubi.mikbot.plugin.api.util.safeGuild
-import dev.schlaubi.mikbot.plugin.api.util.suspendLazy
+import dev.schlaubi.stdx.coroutines.suspendLazy
 import net.stckoverflw.privatechannel.PrivateChannel
 import net.stckoverflw.privatechannel.PrivateChannelDatabase
 import net.stckoverflw.privatechannel.getSettingsForGuild
@@ -66,7 +66,7 @@ suspend fun EphemeralSlashCommand<*>.passwordCommand() = ephemeralSubCommand(::C
 }
 
 class ChannelPasswordArguments : Arguments() {
-    val password by optionalString{
+    val password by optionalString {
         name = "password"
         description = "The new password of the channel"
     }

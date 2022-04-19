@@ -2,10 +2,11 @@ import dev.schlaubi.mikbot.gradle.GenerateDefaultTranslationBundleTask
 import java.util.Locale
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
-    id("dev.schlaubi.mikbot.gradle-plugin") version "1.4.1"
+    kotlin("jvm") version "1.6.20"
+    kotlin("plugin.serialization") version "1.6.20"
+
+    id("com.google.devtools.ksp") version "1.6.20-1.0.5"
+    id("dev.schlaubi.mikbot.gradle-plugin") version "2.0.1"
 
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
 }
@@ -20,13 +21,13 @@ version = "1.0.5"
 repositories {
     mavenCentral()
     maven("https://schlaubi.jfrog.io/artifactory/mikbot/")
-    maven("https://schlaubi.jfrog.io/artifactory/envconf/")
     maven("https://maven.kotlindiscord.com/repository/maven-public/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
-    compileOnly("dev.schlaubi:mikbot-api:2.1.0-SNAPSHOT")
-    ksp("dev.schlaubi:mikbot-plugin-processor:1.0.0")
+    compileOnly("dev.schlaubi:mikbot-api:3.0.0-SNAPSHOT")
+    ksp("dev.schlaubi:mikbot-plugin-processor:2.0.0")
 }
 
 mikbotPlugin {
@@ -64,7 +65,7 @@ tasks {
     }
 
     installBot {
-        botVersion.set("2.1.0-SNAPSHOT")
+        botVersion.set("3.0.0-SNAPSHOT")
     }
 
     pluginPublishing {

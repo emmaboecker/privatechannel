@@ -12,7 +12,7 @@ import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.schlaubi.mikbot.plugin.api.util.safeGuild
-import dev.schlaubi.mikbot.plugin.api.util.suspendLazy
+import dev.schlaubi.stdx.coroutines.suspendLazy
 import net.stckoverflw.privatechannel.PrivateChannel
 import net.stckoverflw.privatechannel.PrivateChannelDatabase
 import net.stckoverflw.privatechannel.getSettingsForGuild
@@ -94,7 +94,7 @@ class JoinWithPasswordArguments : Arguments() {
         description = "The owner of the channel you want to join"
     }
 
-    val password by string{
+    val password by string {
         name = "password"
         description = "The password of the channel"
     }

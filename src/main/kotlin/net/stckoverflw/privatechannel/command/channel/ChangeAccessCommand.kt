@@ -8,12 +8,12 @@ import com.kotlindiscord.kord.extensions.commands.application.slash.ephemeralSub
 import com.kotlindiscord.kord.extensions.types.respond
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Permissions
-import dev.kord.core.any
 import dev.kord.core.behavior.getChannelOf
 import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.schlaubi.mikbot.plugin.api.util.safeGuild
-import dev.schlaubi.mikbot.plugin.api.util.suspendLazy
+import dev.schlaubi.stdx.coroutines.suspendLazy
+import kotlinx.coroutines.flow.firstOrNull
 import net.stckoverflw.privatechannel.ChannelAccess
 import net.stckoverflw.privatechannel.PrivateChannel
 import net.stckoverflw.privatechannel.PrivateChannelDatabase
@@ -72,9 +72,9 @@ suspend fun EphemeralSlashCommand<*>.changeAccessCommand() = ephemeralSubCommand
                         guildSettings().invisibleChannelRoles
                             .any { neededRole ->
                                 guild().getMemberOrNull(privateChannel.owner)?.roles?.let {
-                                    it.any { role ->
+                                    it.firstOrNull { role ->
                                         role.id == neededRole
-                                    } 
+                                    } != null
                                 } == true
                             }
                     ) {

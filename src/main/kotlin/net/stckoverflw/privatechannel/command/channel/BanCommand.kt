@@ -8,14 +8,14 @@ import com.kotlindiscord.kord.extensions.commands.converters.impl.member
 import com.kotlindiscord.kord.extensions.types.respond
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Permissions
-import dev.kord.core.any
 import dev.kord.core.behavior.edit
 import dev.kord.core.behavior.getChannelOf
 import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.VoiceChannel
-import dev.schlaubi.mikbot.plugin.api.util.localSuspendLazy
 import dev.schlaubi.mikbot.plugin.api.util.safeGuild
+import dev.schlaubi.stdx.coroutines.localSuspendLazy
+import kotlinx.coroutines.flow.firstOrNull
 import net.stckoverflw.privatechannel.ChannelAccess
 import net.stckoverflw.privatechannel.PrivateChannel
 import net.stckoverflw.privatechannel.PrivateChannelDatabase
@@ -59,7 +59,7 @@ suspend fun EphemeralSlashCommand<*>.channelBanCommand() = ephemeralSubCommand(:
                         bannedUsers = privateChannel.bannedUsers + arguments.member.id,
                     )
                 )
-                if (voiceChannel().voiceStates.any { it.userId == arguments.member.id && it.channelId == voiceChannel().id }) {
+                if (voiceChannel().voiceStates.firstOrNull { it.userId == arguments.member.id && it.channelId == voiceChannel().id } != null) {
                     arguments.member.edit {
                         voiceChannelId = null
                     }

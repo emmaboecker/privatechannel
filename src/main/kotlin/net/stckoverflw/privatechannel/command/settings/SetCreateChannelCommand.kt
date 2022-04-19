@@ -39,7 +39,7 @@ suspend fun EphemeralSlashCommand<*>.setCreateChannelCommand() = ephemeralSubCom
 }
 
 class SetCreateChannelArguments : Arguments() {
-    val channel by channel{
+    val channel by channel {
         name = "channel"
         description = "The channel to set the Create-Channel to"
         validate {

@@ -6,9 +6,9 @@ import com.kotlindiscord.kord.extensions.commands.application.slash.EphemeralSla
 import com.kotlindiscord.kord.extensions.commands.application.slash.converters.impl.stringChoice
 import com.kotlindiscord.kord.extensions.commands.application.slash.ephemeralSubCommand
 import com.kotlindiscord.kord.extensions.types.respond
-import dev.kord.core.any
 import dev.schlaubi.mikbot.plugin.api.util.safeGuild
-import dev.schlaubi.mikbot.plugin.api.util.suspendLazy
+import dev.schlaubi.stdx.coroutines.suspendLazy
+import kotlinx.coroutines.flow.firstOrNull
 import net.stckoverflw.privatechannel.ChannelType
 import net.stckoverflw.privatechannel.PrivateChannel
 import net.stckoverflw.privatechannel.PrivateChannelDatabase
@@ -37,9 +37,9 @@ suspend fun EphemeralSlashCommand<*>.changeTypeCommand() = ephemeralSubCommand(:
                         guildSettings().permanentChannelRoles
                             .any { neededRole ->
                                 guild().getMemberOrNull(privateChannel!!.owner)?.roles?.let {
-                                    it.any { role ->
+                                    it.firstOrNull { role ->
                                         role.id == neededRole
-                                    } 
+                                    } != null
                                 } == true
                             }
                     ) {

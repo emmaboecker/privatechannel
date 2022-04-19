@@ -1,7 +1,11 @@
 package net.stckoverflw.privatechannel.listener
 
 import com.kotlindiscord.kord.extensions.extensions.event
-import dev.kord.common.entity.*
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.OverwriteType
+import dev.kord.common.entity.Permission
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.createTextChannel
 import dev.kord.core.behavior.channel.createVoiceChannel
 import dev.kord.core.behavior.createCategory
@@ -15,10 +19,14 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.rest.builder.channel.PermissionOverwritesBuilder
 import dev.kord.rest.builder.channel.addMemberOverwrite
-import dev.schlaubi.mikbot.plugin.api.util.localSuspendLazy
+import dev.schlaubi.stdx.coroutines.localSuspendLazy
 import kotlinx.coroutines.flow.count
-import net.stckoverflw.privatechannel.*
 import net.stckoverflw.privatechannel.ChannelType
+import net.stckoverflw.privatechannel.PrivateChannel
+import net.stckoverflw.privatechannel.PrivateChannelDatabase
+import net.stckoverflw.privatechannel.PrivateChannelEventModule
+import net.stckoverflw.privatechannel.getSettingsForGuild
+import net.stckoverflw.privatechannel.reFetch
 import net.stckoverflw.privatechannel.util.getAllowedPermissionsForMember
 import org.litote.kmongo.and
 import org.litote.kmongo.eq
@@ -31,7 +39,6 @@ suspend fun PrivateChannelEventModule.voiceStateUpdateListener() = event<VoiceSt
         val guild = event.state.getGuild()
         val member = event.state.getMember()
         val privateChannel = PrivateChannelDatabase.privateChannelCollection.findOneById(channelId)
-        val voiceChannel = localSuspendLazy { guild.getChannelOf<VoiceChannel>(privateChannel!!.voiceChannelId) }
         val textChannel = localSuspendLazy { guild.getChannelOf<TextChannel>(privateChannel!!.textChannelId) }
         if (event.state.channelId != event.old?.channelId) {
             if (guildSettings.createChannel == event.state.channelId) {

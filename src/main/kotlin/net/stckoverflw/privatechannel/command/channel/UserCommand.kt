@@ -6,12 +6,12 @@ import com.kotlindiscord.kord.extensions.commands.application.slash.EphemeralSla
 import com.kotlindiscord.kord.extensions.commands.application.slash.ephemeralSubCommand
 import com.kotlindiscord.kord.extensions.commands.converters.impl.member
 import com.kotlindiscord.kord.extensions.types.respond
-import dev.kord.core.any
 import dev.kord.core.behavior.edit
 import dev.kord.core.behavior.getChannelOf
 import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.schlaubi.mikbot.plugin.api.util.safeGuild
+import kotlinx.coroutines.flow.firstOrNull
 import net.stckoverflw.privatechannel.ChannelAccess
 import net.stckoverflw.privatechannel.PrivateChannel
 import net.stckoverflw.privatechannel.PrivateChannelDatabase
@@ -94,7 +94,7 @@ suspend fun EphemeralSlashCommand<*>.channelUserCommand() = ephemeralSubCommand(
                 )
 
                 if (privateChannel.access != ChannelAccess.EVERYONE) {
-                    if (voiceChannel.voiceStates.any { it.userId == arguments.member.id && it.channelId == voiceChannel.id }) {
+                    if (voiceChannel.voiceStates.firstOrNull { it.userId == arguments.member.id && it.channelId == voiceChannel.id } != null) {
                         arguments.member.edit {
                             voiceChannelId = null
                         }
@@ -117,7 +117,7 @@ suspend fun EphemeralSlashCommand<*>.channelUserCommand() = ephemeralSubCommand(
 }
 
 class ChannelUserArguments : Arguments() {
-    val member by member{
+    val member by member {
         name = "user"
         description = "The user you want to add or remove from this channel"
     }
